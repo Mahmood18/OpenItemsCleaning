@@ -16,9 +16,14 @@ import os
 warnings.filterwarnings("ignore")
 
 # Load NLTK data
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
+@st.cache_resource(show_spinner=False)
+def download_nltk_data():
+    nltk.download('punkt')
+    nltk.download('stopwords')
+    nltk.download('wordnet')
+
+# Call the download function
+download_nltk_data()
 
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
