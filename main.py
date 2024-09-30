@@ -11,7 +11,7 @@ from nltk import word_tokenize
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import tensorflow as tf
 import warnings
-
+import os
 # Suppress warnings
 warnings.filterwarnings("ignore")
 
@@ -21,11 +21,17 @@ nltk.download('stopwords')
 nltk.download('wordnet')
 
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Load the trained model, tokenizer, and encoder
-model = tf.keras.models.load_model('models/bidirectional_lstm_product_classification_model.h5')
-tokenizer = joblib.load('models/tokenizer.pkl')
-encoder = joblib.load('models/label_encoder.pkl')
+# Load the trained model, tokenizer, and encoder using absolute paths
+model_path = os.path.join(current_dir, 'models', 'bidirectional_lstm_product_classification_model.h5')
+tokenizer_path = os.path.join(current_dir, 'models', 'tokenizer.pkl')
+encoder_path = os.path.join(current_dir, 'models', 'label_encoder.pkl')
+
+# Load the model and tokenizer using the absolute paths
+model = tf.keras.models.load_model(model_path)
+tokenizer = joblib.load(tokenizer_path)
+encoder = joblib.load(encoder_path)
 
 # Define the max sequence length as used during training
 max_sequence_len = 100  # Adjust based on your model's training
